@@ -1,23 +1,48 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import { setupCounter } from './counter.js'
+import "./style.css";
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+function generateString() {
+  let string = ``;
 
-setupCounter(document.querySelector('#counter'))
+  for (let j = 0; j < 1000 / 6.01667; j++) {
+    Math.random() < 0.5 ? (string += `╱`) : (string += `╲`);
+  }
+
+  return string;
+}
+
+function generateGrid() {
+  const grid = [];
+
+  for (let i = 0; i < 20; i++) {
+    grid.push(generateString());
+  }
+
+  return grid;
+}
+
+function createGrid() {
+  const gridContainer = document.createElement(`pre`);
+
+  const grid = generateGrid();
+
+  for (let i = 0; i < grid.length; i++) {
+    const gridRow = document.createElement(`div`);
+    for (let j = 0; j < grid[i].length; j++) {
+      const pixel = document.createElement(`span`);
+      pixel.innerText = grid[i][j];
+      gridRow.appendChild(pixel);
+    }
+    // gridRow.innerText = grid[i];
+    gridContainer.appendChild(gridRow);
+  }
+
+  document.body.appendChild(gridContainer);
+}
+
+function main() {
+  createGrid();
+}
+
+addEventListener("DOMContentLoaded", () => {
+  main();
+});
